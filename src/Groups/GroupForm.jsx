@@ -16,7 +16,6 @@ const GroupForm = () => {
     const employee = location.state.employee;
     const [sportSections, setSportSections] = useState();
     const [coaches, setCoaches] = useState();
-    const [groupValues, setGroupValues] = useState();
 
     useEffect(() => {
         axios.get(apiPath + 'sportSection/getAll').then(response => {
@@ -29,8 +28,6 @@ const GroupForm = () => {
     }, [])
 
     const onFinish = values => {
-        console.log(values)
-
         if (group == null) {
             axios.post(apiPath + 'group/create', {
                 sportSectionId: values.sportSection,
@@ -64,26 +61,56 @@ const GroupForm = () => {
         <>
         <Navbar employee={employee} />
         <div className="group-form">
-            <Form onFinish={values => onFinish(values)}>
-                <Form.Item label="Спортивна секція" name='sportSection' required={true}>
-                    <Select placeholder="Оберіть спортивну секцію" defaultValue={group.sportSection.id}>
-                        {sportSections?.map(s => <Option value={s.id}>{s.name}</Option>)} 
-                    </Select>
-                </Form.Item>
-                <Form.Item label="Тренер" name='coach' required={true}>
-                    <Select placeholder="Оберіть тренера" defaultValue={group.coach.id}>
-                        {coaches?.map(c => <Option value={c.id}>{c.employeeInfo.firstName + ' ' + c.employeeInfo.lastName}</Option>)} 
-                    </Select>
-                </Form.Item>
-                <Form.Item label='Максимальна кількість відвідувачів' name='maxCustomersCount' required={true}>
-                    <Input min={1} max={100} defaultValue={group?.maxCustomersCount ?? 10} type='number'/>
-                </Form.Item>
-                <Form.Item label='Дата початку тренувань' name='startDate' required={true}>
-                    <DatePicker placeholder="Оберіть дату" defaultValue={moment(group.startDate)}/>
-                </Form.Item>
-                <Form.Item label='Дата закінчення тренувань' name='endDate' required={true}>
-                    <DatePicker placeholder="Оберіть дату" defaultValue={moment(group.endDate)}/>
-                </Form.Item>
+            <Form onFinish={onFinish}>
+                {group != null 
+                      ? <Form.Item label="Спортивна секція" name='sportSection' rules={[{ required: true, message: 'Будь ласка, оберіть спортивну секцію!'}]}  initialValue={group.sportSection.id}>
+                            <Select placeholder="Оберіть спортивну секцію">
+                                {sportSections?.map(s => <Option value={s.id}>{s.name}</Option>)} 
+                            </Select>
+                        </Form.Item>
+                      : <Form.Item label="Спортивна секція" name='sportSection' rules={[{ required: true, message: 'Будь ласка, оберіть спортивну секцію!'}]} >
+                            <Select placeholder="Оберіть спортивну секцію">
+                                {sportSections?.map(s => <Option value={s.id}>{s.name}</Option>)} 
+                            </Select>
+                        </Form.Item>}
+                
+                {group != null 
+                      ? <Form.Item label="Тренер" name='coach' rules={[{ required: true, message: 'Будь ласка, оберіть тренера!'}]} initialValue={group.coach.id}>
+                            <Select placeholder="Оберіть тренера">
+                                {coaches?.map(c => <Option value={c.id}>{c.employeeInfo.firstName + ' ' + c.employeeInfo.lastName}</Option>)} 
+                            </Select>
+                        </Form.Item>
+                      : <Form.Item label="Тренер" name='coach' rules={[{ required: true, message: 'Будь ласка, оберіть тренера!'}]} >
+                            <Select placeholder="Оберіть тренера">
+                                {coaches?.map(c => <Option value={c.id}>{c.employeeInfo.firstName + ' ' + c.employeeInfo.lastName}</Option>)} 
+                            </Select>
+                        </Form.Item>}
+                
+                {group != null 
+                      ? <Form.Item label='Максимальна кількість відвідувачів' name='maxCustomersCount' rules={[{ required: true, message: 'Будь ласка, введіть значення!'}]}  initialValue={group?.maxCustomersCount ?? 10}>
+                            <Input min={1} max={100} type='number'/>
+                        </Form.Item>
+                      : <Form.Item label='Максимальна кількість відвідувачів' name='maxCustomersCount' rules={[{ required: true, message: 'Будь ласка, введіть значення!'}]} >
+                            <Input min={1} max={100} type='number'/>
+                        </Form.Item>}
+                        
+                {group != null 
+                      ? <Form.Item label='Дата початку тренувань' name='startDate' rules={[{ required: true, message: 'Будь ласка, оберіть дату!'}]}  initialValue={moment(group.startDate)}>
+                            <DatePicker placeholder="Оберіть дату"/>
+                        </Form.Item>
+                      : <Form.Item label='Дата початку тренувань' name='startDate' rules={[{ required: true, message: 'Будь ласка, оберіть дату!'}]} >
+                            <DatePicker placeholder="Оберіть дату"/>
+                        </Form.Item>}
+                
+                
+                {group != null 
+                      ? <Form.Item label='Дата закінчення тренувань' name='endDate' rules={[{ required: true, message: 'Будь ласка, оберіть дату!'}]}  initialValue={moment(group.endDate)}>
+                            <DatePicker placeholder="Оберіть дату"/>
+                        </Form.Item>
+                      : <Form.Item label='Дата закінчення тренувань' name='endDate' rules={[{ required: true, message: 'Будь ласка, оберіть дату!'}]} >
+                            <DatePicker placeholder="Оберіть дату"/>
+                        </Form.Item>}
+
                 <Button type="primary" htmlType="submit" className="create-button">
                     {group == null ? 'Створити' : 'Оновити'}
                 </Button>

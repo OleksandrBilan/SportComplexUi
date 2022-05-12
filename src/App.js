@@ -14,6 +14,7 @@ function App() {
   return (
     <Router>
         <Routes>
+            <Route path='/createGroup' element={<GroupForm />} />
             <Route path='/editGroup' element={<GroupForm />} />
             <Route path='/group' element={<Group/>} />
             <Route path='/groups' element={<GroupsWindow/>} />

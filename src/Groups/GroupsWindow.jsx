@@ -3,7 +3,7 @@ import Navbar from "../Navbar/Navbar";
 import { useLocation, useNavigate } from 'react-router-dom';
 import './groups.css';
 import axios from "axios";
-import { Table } from 'antd';
+import { Button, Table } from 'antd';
 import { apiPath } from "../App";
 
 const GroupsWindow = () => {
@@ -104,6 +104,9 @@ const GroupsWindow = () => {
             };
           }}
         />
+        <Button type="primary" className="new-group-btn" onClick={() => navigate('/createGroup', {state: {employee: employee}})}>
+            Створити нову групу
+        </Button>
         </>
     )
 }
