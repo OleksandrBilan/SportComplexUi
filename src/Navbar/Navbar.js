@@ -4,23 +4,24 @@ import "antd/dist/antd.css";
 import "./navbar.css";
 import { useNavigate } from 'react-router-dom';
 
-const Navbar = (employee) => {
+const Navbar = (props) => {
     const navigate = useNavigate();
+    const employee = props.employee;
 
     return (
         <>
         <Menu className='navbar' theme="light" mode="horizontal">
-            <Menu.Item onClick={() => alert(employee.firstName)}>
-                Groups
+            <Menu.Item onClick={() => navigate('/groups', {state: {employee: employee}})}>
+                Групи
             </Menu.Item>
             <Menu.Item >
-                Individual Trainings
+                Індивідуальні тренування
             </Menu.Item>
-            <Menu.Item style={{float: 'right'}} onClick={() => navigate('/')}>
-                Personal Info
+            <Menu.Item onClick={() => navigate('/personalInfo', {state: {employee: employee}})}>
+                Особиста інформація
             </Menu.Item>
-            <Menu.Item style={{float: 'right'}} onClick={() => navigate('/')}>
-                Sign Out
+            <Menu.Item onClick={() => navigate('/')}>
+                Вийти з акаунту
             </Menu.Item>
         </Menu>
         </>

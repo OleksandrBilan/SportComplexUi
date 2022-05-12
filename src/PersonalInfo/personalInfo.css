@@ -1,0 +1,17 @@
+.personal-info {
+    padding: 1%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.employee-info {
+    width: 55%;
+}
+
+h1 {
+    color: #2989f0;
+}
+
+button {
+    margin-left: 1%;
+}

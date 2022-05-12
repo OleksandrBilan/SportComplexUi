@@ -10,13 +10,16 @@ const Login = () => {
     const navigate = useNavigate();
 
     const onFinish = values => {
+        console.log(values)
+
         axios.post(apiPath + 'employee/login', {
             login: values.login,
             password: values.password
         }).then(response => {
-            navigate('/personalInfo', {state:response.data})
+            console.log(response)
+            navigate('/personalInfo', {state: {employee: response.data}})
         }).catch(error => {
-            alert("Wrong credentials!");
+            alert("Неправильно введені логін або пароль!");
         });
     };
 
@@ -27,29 +30,29 @@ const Login = () => {
                     name="login-form"
                     onFinish={onFinish}
                 >
-                    <h1 className="form-title">Sign In</h1>
+                    <h1 className="form-title">Вхід до системи</h1>
 
                     <Form.Item
                     name="login"
-                    rules={[{ required: true, message: 'Please input your username!' }]}
+                    rules={[{ required: true, message: 'Будь ласка, введіть ваш логін!' }]}
                     >
                         <Input
-                            placeholder="Login"
+                            placeholder="Логін"
                         />
                     </Form.Item>
         
                     <Form.Item
                     name="password"
-                    rules={[{ required: true, message: 'Please input your password!' }]}
+                    rules={[{ required: true, message: 'Будь ласка, введіть ваш пароль!' }]}
                     >
                         <Input.Password 
-                            placeholder="Password"
+                            placeholder="Пароль"
                         />
                     </Form.Item>
                     
                     <Form.Item>
                         <Button type="primary" htmlType="submit" className="login-form-button">
-                            Submit
+                            Увійти
                         </Button>
                     </Form.Item>
                 </Form>
