@@ -1,0 +1,16 @@
+.login-box {
+    width: 30%;
+    height: 50%;
+    margin-left: 35%;
+    margin-top: 10%;
+}
+
+.login-form-button {
+    width: 50%;
+    margin-left: 25%;
+}
+
+.form-title {
+    width: 100%;
+    text-align: center;
+}
