@@ -92,6 +92,7 @@ const GroupsWindow = () => {
         <Table 
         dataSource={dataSource} 
         columns={columns}
+        pagination={{ pageSize: 9 }}
         onRow={(record, rowIndex) => {
             return {
                 onClick: event => {

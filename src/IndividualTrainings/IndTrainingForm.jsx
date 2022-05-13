@@ -30,7 +30,7 @@ const IndTrainingForm = () => {
 
     const onFinish = values => {
         let temp = {
-            id: indTraining.id,
+            id: indTraining?.id,
             membershipReceiptId: values.membershipReceipt,
             individualCoachId: values.coach,
             payedHours: values.payedHours,

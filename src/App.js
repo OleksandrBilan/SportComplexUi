@@ -12,11 +12,18 @@ import GroupForm from "./Groups/GroupForm";
 import IndividualTrainingsWindow from "./IndividualTrainings/IndividualTrainingsWindow";
 import IndividualTraining from "./IndividualTrainings/IndividualTraining";
 import IndTrainingForm from "./IndividualTrainings/IndTrainingForm";
+import MembershipReceiptsWindow from "./MembershipReceipt/MembershipReceiptsWindow";
+import MembershipReceipt from "./MembershipReceipt/MembershipReceipt";
+import MembershipReceiptForm from "./MembershipReceipt/MembershipReceiptForm";
 
 function App() {
   return (
     <Router>
         <Routes>
+            <Route path='/createMembershipReceipt' element={<MembershipReceiptForm />} />
+            <Route path='/editMembershipReceipt' element={<MembershipReceiptForm />} />
+            <Route path='/membershipReceipt' element={<MembershipReceipt />} />
+            <Route path='/membershipReceipts' element={<MembershipReceiptsWindow />} />
             <Route path='/createIndividualTraining' element={<IndTrainingForm />} />
             <Route path='/editIndividualTraining' element={<IndTrainingForm />} />
             <Route path='/individualTraining' element ={<IndividualTraining />} />

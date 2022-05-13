@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useLocation, useNavigate } from 'react-router-dom';
 import Navbar from "../Navbar/Navbar";
 import './groups.css';
@@ -30,8 +30,8 @@ const Group = () => {
         <div className="group-info">
             <h1>Група</h1>
             <h2>Максимальна кількість відвідувачів: {group.maxCustomersCount}</h2>
-            <h2>Дата початку занять: {group.startDate.split('T')[0]}</h2>
-            <h2>Дата закінчення занять: {group.endDate.split('T')[0]}</h2>
+            <h2>Дата початку занять: {new Date(group.startDate).toLocaleDateString()}</h2>
+            <h2>Дата закінчення занять: {new Date(group.endDate).toLocaleDateString()}</h2>
             <h2>Тренер: <a onClick={() => navigate('/personalInfo', {state: {navEmployee: navEmployee, employee: group.coach.employeeInfo}})}>{group.coach.employeeInfo.firstName + ' ' + group.coach.employeeInfo.lastName}</a></h2>
         </div>
         <div className="sport-section">

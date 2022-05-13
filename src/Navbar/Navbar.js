@@ -17,6 +17,9 @@ const Navbar = (props) => {
             <Menu.Item onClick={() => navigate('/individualTrainings', {state: {navEmployee: employee, employee: employee}})}>
                 Індивідуальні тренування
             </Menu.Item>
+            <Menu.Item onClick={() => navigate('/membershipReceipts', {state: {navEmployee: employee, employee: employee}})}>
+                Продажі aбонементів
+            </Menu.Item>
             <Menu.Item onClick={() => navigate('/personalInfo', {state: {navEmployee: employee, employee: employee}})}>
                 Особиста інформація
             </Menu.Item>

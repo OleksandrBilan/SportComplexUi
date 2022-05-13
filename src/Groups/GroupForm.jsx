@@ -29,29 +29,25 @@ const GroupForm = () => {
     }, [])
 
     const onFinish = values => {
+        let temp = {
+            id: group?.id,
+            sportSectionId: values.sportSection,
+            coachId: values.coach,
+            maxCustomersNumber: values.maxCustomersCount,
+            startDate: values.startDate,
+            endDate: values.endDate
+        };
+
         if (group == null) {
-            axios.post(apiPath + 'group/create', {
-                sportSectionId: values.sportSection,
-                coachId: values.coach,
-                maxCustomersNumber: values.maxCustomersCount,
-                startDate: values.startDate,
-                endDate: values.endDate
-            }).then(response => {
-                navigate('/groups', {state: {employee: employee}});
+            axios.post(apiPath + 'group/create', temp).then(response => {
+                navigate('/groups', {state: {navEmployee: navEmployee, employee: employee}});
             }).catch(error => {
                 alert('Помилка створення!');
             })
         }
         else {
-            axios.put(apiPath + 'group/update', {
-                id: group.id,
-                sportSectionId: values.sportSection,
-                coachId: values.coach,
-                maxCustomersNumber: values.maxCustomersCount,
-                startDate: values.startDate,
-                endDate: values.endDate
-            }).then(response => {
-                navigate('/groups', {state: {employee: employee}});
+            axios.put(apiPath + 'group/update', temp).then(response => {
+                navigate('/groups', {state: {navEmployee: navEmployee, employee: employee}});
             }).catch(error => {
                 alert('Помилка оновлення!');
             })
