@@ -9,51 +9,52 @@ import { apiPath } from "../App";
 const GroupsWindow = () => {
     const navigate = useNavigate();
     const location = useLocation();
-    const employee = location.state.employee;
+    const navEmployee = location.state.navEmployee;
+    const employee = location.state.employee ?? navEmployee;
     const [dataSource, setDataSource] = useState();
     const [groups, setGroups] = useState();
 
     useEffect(() => {
         axios.get(apiPath + 'group/getAll').then(response => {
-            let tempGroups = response.data;   
-            
-            let tempDataSource = [];
-            response.data.forEach(g => {
+            let tempGroups = response.data;
+
+            let tempDataSource = []
+            tempGroups.forEach(g => {
                 tempDataSource.push({
                     key: g.id,
                     sportSection: g.sportSection.name,
                     coach: g.coach.employeeInfo.firstName + ' ' + g.coach.employeeInfo.lastName,
                     maxCustomersCount: g.maxCustomersCount,
-                    startDate: g.startDate.split('T')[0],
-                    endDate: g.endDate.split('T')[0]
+                    startDate: new Date(g.startDate).toLocaleDateString(),
+                    endDate: new Date(g.endDate).toLocaleDateString()
                 })
             });
-
-            setGroups(tempGroups);
-            setDataSource(tempDataSource);
 
             axios.get(apiPath + 'coach/getByEmployeeId', {params: {employeeId: employee.id}}).then(response => {
                 let coach = response.data;
     
                 if (coach != null) {
-                    let temp = tempGroups.filter(g => g.coach.id == coach.id);
-    
-                    let tempDataSource = []
-                    temp.forEach(g => {
-                        tempDataSource.push({
-                            key: g.id,
-                            sportSection: g.sportSection.name,
-                            coach: g.coach.employeeInfo.firstName + ' ' + g.coach.employeeInfo.lastName,
-                            maxCustomersCount: g.maxCustomersCount,
-                            startDate: g.startDate.split('T')[0],
-                            endDate: g.endDate.split('T')[0]
-                        })
-                    });
-    
-                    setGroups(temp);
-                    setDataSource(tempDataSource);
+                    tempGroups = tempGroups.filter(g => g.coach.id == coach.id);
                 }
-            }).catch(error => {});
+    
+                let tempDataSource = []
+                tempGroups.forEach(g => {
+                    tempDataSource.push({
+                        key: g.id,
+                        sportSection: g.sportSection.name,
+                        coach: g.coach.employeeInfo.firstName + ' ' + g.coach.employeeInfo.lastName,
+                        maxCustomersCount: g.maxCustomersCount,
+                        startDate: new Date(g.startDate).toLocaleDateString(),
+                        endDate: new Date(g.endDate).toLocaleDateString()
+                    })
+                });
+    
+                setGroups(tempGroups);
+                setDataSource(tempDataSource);
+            }).catch(error => {
+                setGroups(tempGroups);
+                setDataSource(tempDataSource);
+            });
         });
     }, [])
 
@@ -87,7 +88,7 @@ const GroupsWindow = () => {
 
     return (
         <>
-        <Navbar employee={employee} />
+        <Navbar employee={navEmployee} />
         <Table 
         dataSource={dataSource} 
         columns={columns}
@@ -96,7 +97,8 @@ const GroupsWindow = () => {
                 onClick: event => {
                     navigate('/group', {
                         state: {
-                            group: groups[rowIndex], 
+                            group: groups[rowIndex],
+                            navEmployee: navEmployee,
                             employee: employee
                         }
                     })
@@ -104,7 +106,7 @@ const GroupsWindow = () => {
             };
           }}
         />
-        <Button type="primary" className="new-group-btn" onClick={() => navigate('/createGroup', {state: {employee: employee}})}>
+        <Button type="primary" className="new-group-btn" onClick={() => navigate('/createGroup', {state: {navEmployee: navEmployee, employee: employee}})}>
             Створити нову групу
         </Button>
         </>

@@ -9,11 +9,18 @@ import Login from './Login/LoginWindow';
 import PersonalInfo from "./PersonalInfo/PersonalInfo";
 import Group from './Groups/Group';
 import GroupForm from "./Groups/GroupForm";
+import IndividualTrainingsWindow from "./IndividualTrainings/IndividualTrainingsWindow";
+import IndividualTraining from "./IndividualTrainings/IndividualTraining";
+import IndTrainingForm from "./IndividualTrainings/IndTrainingForm";
 
 function App() {
   return (
     <Router>
         <Routes>
+            <Route path='/createIndividualTraining' element={<IndTrainingForm />} />
+            <Route path='/editIndividualTraining' element={<IndTrainingForm />} />
+            <Route path='/individualTraining' element ={<IndividualTraining />} />
+            <Route path='/individualTrainings' element={<IndividualTrainingsWindow />} />
             <Route path='/createGroup' element={<GroupForm />} />
             <Route path='/editGroup' element={<GroupForm />} />
             <Route path='/group' element={<Group/>} />

@@ -10,14 +10,11 @@ const Login = () => {
     const navigate = useNavigate();
 
     const onFinish = values => {
-        console.log(values)
-
         axios.post(apiPath + 'employee/login', {
             login: values.login,
             password: values.password
         }).then(response => {
-            console.log(response)
-            navigate('/personalInfo', {state: {employee: response.data}})
+            navigate('/personalInfo', {state: {navEmployee: response.data, employee: response.data}})
         }).catch(error => {
             alert("Неправильно введені логін або пароль!");
         });

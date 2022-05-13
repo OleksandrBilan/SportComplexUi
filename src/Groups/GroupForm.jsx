@@ -13,7 +13,8 @@ const GroupForm = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const group = location.state.group;
-    const employee = location.state.employee;
+    const navEmployee = location.state.navEmployee;
+    const employee = location.state.employee ?? navEmployee;
     const [sportSections, setSportSections] = useState();
     const [coaches, setCoaches] = useState();
 
@@ -59,7 +60,7 @@ const GroupForm = () => {
 
     return (
         <>
-        <Navbar employee={employee} />
+        <Navbar employee={navEmployee} />
         <div className="group-form">
             <Form onFinish={onFinish}>
                 {group != null 
@@ -87,7 +88,7 @@ const GroupForm = () => {
                         </Form.Item>}
                 
                 {group != null 
-                      ? <Form.Item label='Максимальна кількість відвідувачів' name='maxCustomersCount' rules={[{ required: true, message: 'Будь ласка, введіть значення!'}]}  initialValue={group?.maxCustomersCount ?? 10}>
+                      ? <Form.Item label='Максимальна кількість відвідувачів' name='maxCustomersCount' rules={[{ required: true, message: 'Будь ласка, введіть значення!'}]}  initialValue={group.maxCustomersCount}>
                             <Input min={1} max={100} type='number'/>
                         </Form.Item>
                       : <Form.Item label='Максимальна кількість відвідувачів' name='maxCustomersCount' rules={[{ required: true, message: 'Будь ласка, введіть значення!'}]} >

@@ -11,13 +11,13 @@ const Navbar = (props) => {
     return (
         <>
         <Menu className='navbar' theme="light" mode="horizontal">
-            <Menu.Item onClick={() => navigate('/groups', {state: {employee: employee}})}>
+            <Menu.Item onClick={() => navigate('/groups', {state: {navEmployee: employee, employee: employee}})}>
                 Групи
             </Menu.Item>
-            <Menu.Item >
+            <Menu.Item onClick={() => navigate('/individualTrainings', {state: {navEmployee: employee, employee: employee}})}>
                 Індивідуальні тренування
             </Menu.Item>
-            <Menu.Item onClick={() => navigate('/personalInfo', {state: {employee: employee}})}>
+            <Menu.Item onClick={() => navigate('/personalInfo', {state: {navEmployee: employee, employee: employee}})}>
                 Особиста інформація
             </Menu.Item>
             <Menu.Item onClick={() => navigate('/')}>
