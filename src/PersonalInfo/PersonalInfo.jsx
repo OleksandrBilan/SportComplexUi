@@ -3,7 +3,7 @@ import Navbar from "../Navbar/Navbar";
 import {useLocation} from 'react-router-dom';
 import './personalInfo.css';
 import axios from "axios";
-import { apiPath } from "../App";
+import { apiPath, coachPostionId } from "../App";
 import { Tag } from 'antd';
 import 'antd/dist/antd.css';
 
@@ -15,7 +15,7 @@ const PersonalInfo = () => {
     const [individualCoach, setIndCoach] = useState();
 
     useEffect(() => {
-        if (employee.position.id == 2) {
+        if (employee.position.id == coachPostionId) {
             axios.get(apiPath + 'coach/getByEmployeeId', {params: {employeeId: employee.id}}).then(response => {
                 let tempCoach = response.data;
                 setCoach(response.data);

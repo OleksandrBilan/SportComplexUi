@@ -3,6 +3,7 @@ import { Menu } from "antd";
 import "antd/dist/antd.css";
 import "./navbar.css";
 import { useNavigate } from 'react-router-dom';
+import { managerPositionId } from "../App";
 
 const Navbar = (props) => {
     const navigate = useNavigate();
@@ -17,9 +18,18 @@ const Navbar = (props) => {
             <Menu.Item onClick={() => navigate('/individualTrainings', {state: {navEmployee: employee, employee: employee}})}>
                 Індивідуальні тренування
             </Menu.Item>
+            {employee.position.id == managerPositionId && 
             <Menu.Item onClick={() => navigate('/membershipReceipts', {state: {navEmployee: employee, employee: employee}})}>
                 Продажі aбонементів
-            </Menu.Item>
+            </Menu.Item>}
+            {employee.position.id == managerPositionId && 
+            <Menu.Item onClick={() => navigate('/subscriptionReceipts', {state: {navEmployee: employee, employee: employee}})}>
+                Продажі aбонементів на групові заняття
+            </Menu.Item>}
+            {employee.position.id == managerPositionId && 
+            <Menu.Item onClick={() => navigate('/customers', {state: {navEmployee: employee, employee: employee}})}>
+                Клієнти
+            </Menu.Item>}
             <Menu.Item onClick={() => navigate('/personalInfo', {state: {navEmployee: employee, employee: employee}})}>
                 Особиста інформація
             </Menu.Item>

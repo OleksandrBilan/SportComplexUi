@@ -1,8 +1,8 @@
-import { Form, Select, Input, DatePicker, Button } from "antd";
+import { Form, Select, DatePicker, Button } from "antd";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from 'react-router-dom';
-import { apiPath } from "../App";
+import { apiPath, managerPositionId } from "../App";
 import Navbar from "../Navbar/Navbar";
 import '../Groups/groupForm.css';
 import moment from 'moment';
@@ -25,7 +25,7 @@ const MembershipReceiptForm = () => {
         })
 
         axios.get(apiPath + 'employee/getAll').then(response => {
-            let temp = response.data.filter(e => e.position.id = 1);
+            let temp = response.data.filter(e => e.position.id = managerPositionId);
             setEmployees(temp);
         })
 

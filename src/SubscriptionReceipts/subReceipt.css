@@ -1,0 +1,17 @@
+.container {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.left-column {
+    width: 50%;
+    padding-left: 1%;
+}
+
+.right-column {
+    width: 50%;
+}
+
+.buttons-div {
+    margin-top: 5%;
+}
