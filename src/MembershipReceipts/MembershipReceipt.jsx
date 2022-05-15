@@ -35,7 +35,7 @@ const MembershipReceipt = () => {
         </div>
         <div className="sport-section">
             <h1>Клієнт</h1>
-            <h2>Ім'я: {memReceipt.customer.firstName + ' ' + memReceipt.customer.lastName}</h2>
+            <h2>Клієнт: <a onClick={() => navigate('/customer', {state: {navEmployee: navEmployee, customer: memReceipt.customer}})}>{memReceipt.customer.firstName + ' ' + memReceipt.customer.lastName}</a></h2>
             <h2>Номер телефону: {memReceipt.customer.phoneNumber}</h2>
         </div>
         <div className="sport-section">

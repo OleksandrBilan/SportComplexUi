@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "../Navbar/Navbar";
-import {useLocation} from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import './personalInfo.css';
 import axios from "axios";
-import { apiPath, coachPostionId } from "../App";
-import { Tag } from 'antd';
+import { adminPositionId, apiPath, coachPostionId } from "../App";
+import { Tag, Button } from 'antd';
 import 'antd/dist/antd.css';
 
 const PersonalInfo = () => {
+    const navigate = useNavigate();
     const location = useLocation();
     const navEmployee = location.state.navEmployee;
     const employee = location.state.employee ?? navEmployee;
@@ -28,6 +29,18 @@ const PersonalInfo = () => {
         }
     }, [])
 
+    const onDelete = () => {
+        if (window.confirm('Ви впевнені, що хочете видалити цей запис?')) {
+            axios.delete(apiPath + 'employee/delete?id=' + employee.id).then(() => {
+                navigate('/employees', {state: {navEmployee: navEmployee}});
+            });
+        }
+    }
+
+    const onEdit = () => {
+        navigate('/editEmployee', {state: {employee: employee, navEmployee: navEmployee}});
+    }
+
     return (
         <>
         <Navbar employee={navEmployee} />
@@ -39,6 +52,7 @@ const PersonalInfo = () => {
                 <h2>Номер телефону: {employee.phoneNumber}</h2>
                 <h2>Посада: {employee.position.name}</h2>
                 <h2>Дата найму: {new Date(employee.hireDate).toLocaleDateString()}</h2>
+                {navEmployee.position.id == adminPositionId && <h2>Логін: {employee.login}</h2>}
                 <h1>Зал</h1>
                 <h2>Місто: {employee.gym.city.name}</h2>
                 <h2>Адреса: {employee.gym.address}</h2>
@@ -59,6 +73,11 @@ const PersonalInfo = () => {
                 </>}
             </div>
         </div>
+        {navEmployee.position.id == adminPositionId &&
+        <div className="buttons">
+            <Button type="primary" onClick={() => onEdit()}>Змінити</Button>
+            <Button type="danger" onClick={() => onDelete()}>Видалити</Button>
+        </div>}
         </>
     )
 }

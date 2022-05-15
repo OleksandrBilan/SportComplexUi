@@ -18,11 +18,25 @@ import MembershipReceiptForm from "./MembershipReceipts/MembershipReceiptForm";
 import SubscriptionReceiptsWindow from "./SubscriptionReceipts/SubscriptionReceiptsWindow";
 import SubscriptionReceipt from "./SubscriptionReceipts/SubscriptionReceipt";
 import SubscriptionReceiptForm from "./SubscriptionReceipts/SubscriptionReceiptForm";
+import CustomersWindow from "./Customers/CustomersWindow";
+import Customer from "./Customers/Customer";
+import CustomerForm from "./Customers/CustomerForm";
+import EmployeesWindow from "./Employees/EmployeesWindow";
+import Employee from "./Employees/Employee";
+import EmployeeForm from "./Employees/EmployeeForm";
 
 function App() {
     return (
         <Router>
             <Routes>
+                <Route path='/createEmployee' element={<EmployeeForm />} />
+                <Route path='/editEmployee' element={<EmployeeForm />} />
+                <Route path='/employee' element={<Employee />} />
+                <Route path='/employees' element={<EmployeesWindow />} />
+                <Route path='/createCustomer' element={<CustomerForm />} />
+                <Route path='/editCustomer' element={<CustomerForm />} />
+                <Route path='/customer' element={<Customer />} />
+                <Route path='/customers' element={<CustomersWindow />} />
                 <Route path='/createSubscriptionReceipt' element={<SubscriptionReceiptForm />} />
                 <Route path='/editSubscriptionReceipt' element={<SubscriptionReceiptForm />} />
                 <Route path='/subscriptionReceipt' element={<SubscriptionReceipt />} />

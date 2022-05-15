@@ -30,7 +30,7 @@ const IndividualTraining = () => {
         <Navbar employee={employee} />
         <div className="ind-training-info">
             <h1>Індивідуальне тренування</h1>
-            <h2>Клієнт: {<a>{indTraining.membershipReceipt.customer.firstName + ' ' + indTraining.membershipReceipt.customer.lastName}</a>}</h2>
+            <h2>Клієнт: <a onClick={() => navigate('/customer', {state: {navEmployee: navEmployee, customer: indTraining.membershipReceipt.customer}})}>{indTraining.membershipReceipt.customer.firstName + ' ' + indTraining.membershipReceipt.customer.lastName}</a></h2>
             <h2>Тренер: <a onClick={() => navigate('/personalInfo', {state: {navEmployee: navEmployee, employee: indTraining.coach.coachInfo.employeeInfo}}) }>{indTraining.coach.coachInfo.employeeInfo.firstName + ' ' + indTraining.coach.coachInfo.employeeInfo.lastName}</a></h2>
             <h2>Оплачено годин: {indTraining.payedHours}</h2>
             <h2>Ціна: {indTraining.price}</h2>

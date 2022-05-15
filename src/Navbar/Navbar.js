@@ -3,7 +3,7 @@ import { Menu } from "antd";
 import "antd/dist/antd.css";
 import "./navbar.css";
 import { useNavigate } from 'react-router-dom';
-import { managerPositionId } from "../App";
+import { adminPositionId, managerPositionId } from "../App";
 
 const Navbar = (props) => {
     const navigate = useNavigate();
@@ -12,15 +12,18 @@ const Navbar = (props) => {
     return (
         <>
         <Menu className='navbar' theme="light" mode="horizontal">
+            {employee.position.id != adminPositionId &&
             <Menu.Item onClick={() => navigate('/groups', {state: {navEmployee: employee, employee: employee}})}>
                 Групи
-            </Menu.Item>
+            </Menu.Item>}
+            {employee.position.id != adminPositionId &&
             <Menu.Item onClick={() => navigate('/individualTrainings', {state: {navEmployee: employee, employee: employee}})}>
                 Індивідуальні тренування
-            </Menu.Item>
+            </Menu.Item>}
+
             {employee.position.id == managerPositionId && 
             <Menu.Item onClick={() => navigate('/membershipReceipts', {state: {navEmployee: employee, employee: employee}})}>
-                Продажі aбонементів
+                Продажі загальних aбонементів
             </Menu.Item>}
             {employee.position.id == managerPositionId && 
             <Menu.Item onClick={() => navigate('/subscriptionReceipts', {state: {navEmployee: employee, employee: employee}})}>
@@ -30,7 +33,13 @@ const Navbar = (props) => {
             <Menu.Item onClick={() => navigate('/customers', {state: {navEmployee: employee, employee: employee}})}>
                 Клієнти
             </Menu.Item>}
-            <Menu.Item onClick={() => navigate('/personalInfo', {state: {navEmployee: employee, employee: employee}})}>
+
+            {employee.position.id == adminPositionId && 
+            <Menu.Item onClick={() => navigate('/employees', {state: {navEmployee: employee, employee: employee}})}>
+                Працівники
+            </Menu.Item>}
+
+            <Menu.Item style={{marginLeft: 'auto'}} onClick={() => navigate('/personalInfo', {state: {navEmployee: employee, employee: employee}})}>
                 Особиста інформація
             </Menu.Item>
             <Menu.Item onClick={() => navigate('/')}>

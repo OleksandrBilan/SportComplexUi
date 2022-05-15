@@ -37,7 +37,7 @@ const SubscriptionReceipt = () => {
                 </div>
                 <div className="customer">
                     <h1>Клієнт</h1>
-                    <h2>Ім'я: {subReceipt.customer.firstName + ' ' + subReceipt.customer.lastName}</h2>
+                    <h2>Клієнт: <a onClick={() => navigate('/customer', {state: {navEmployee: navEmployee, customer: subReceipt.customer}})}>{subReceipt.customer.firstName + ' ' + subReceipt.customer.lastName}</a></h2>
                     <h2>Номер телефону: {subReceipt.customer.phoneNumber}</h2>
                 </div>
             </div>

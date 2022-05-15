@@ -1,0 +1,20 @@
+.cards {
+    margin-top: 1%;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.new-group-btn {
+    margin-top: 1%;
+}
+
+.cust-buttons {
+    margin-top: 1%;
+    margin-left: 40%;
+}
+
+.customer-form {
+    width: 20%;
+    margin-left: 40%;
+    padding-top: 2%;
+}
