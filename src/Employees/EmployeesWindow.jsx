@@ -3,7 +3,7 @@ import Navbar from "../Navbar/Navbar";
 import { useLocation, useNavigate } from 'react-router-dom';
 import axios from "axios";
 import { Button, Table } from 'antd';
-import { apiPath } from "../App";
+import { apiPath, coachPostionId } from "../App";
 
 const EmployeesWindow = () => {
     const navigate = useNavigate();
@@ -17,22 +17,34 @@ const EmployeesWindow = () => {
         axios.get(apiPath + 'employee/getAll').then(response => {
             let tempEmployees = response.data;
 
-            let tempDataSource = []
-            tempEmployees.forEach(e => {
-                tempDataSource.push({
-                    key: e.id,
-                    name: e.firstName + ' ' + e.lastName,
-                    login: e.login,
-                    position: e.position.name,
-                    hireDate: new Date(e.hireDate).toLocaleDateString(),
-                    dismissDate: e.dismissDate == null ? 'Н/З' : new Date(e.dismissDate).toLocaleDateString(),
-                    city: e.gym.city.name,
-                    address: e.gym.address
-                })
-            });
+            axios.get(apiPath + 'coach/getAll').then(response => {
+                
+                axios.get(apiPath + 'coach/individualCoaches').then(indResponse => {
+                    tempEmployees.filter(e => e.position.id == coachPostionId).forEach(e => {
+                        let coach = response.data.filter(c => c.employeeInfo.id == e.id)[0];
+                        let indCoach = indResponse.data.filter(ic => ic.coachInfo.id == coach.id)[0];
+                        if (indCoach != null) {
+                            e.position.name += ', Індивідуальний';
+                        }
+                    })
 
-            setEmployees(tempEmployees);
-            setDataSource(tempDataSource);
+                    let tempDataSource = []
+                    tempEmployees.forEach(e => {
+                        tempDataSource.push({
+                            key: e.id,
+                            name: e.firstName + ' ' + e.lastName,
+                            login: e.login,
+                            position: e.position.name,
+                            hireDate: new Date(e.hireDate).toLocaleDateString(),
+                            dismissDate: e.dismissDate == null ? 'Н/З' : new Date(e.dismissDate).toLocaleDateString(),
+                            gym: e.gym.city.name + ', ' + e.gym.address
+                        })
+                    });
+        
+                    setEmployees(tempEmployees);
+                    setDataSource(tempDataSource);
+                })
+            })
         });
     }, [])
 
@@ -63,14 +75,9 @@ const EmployeesWindow = () => {
             key: 'dismissDate'
         },
         {
-            title: 'Місто',
-            dataIndex: 'city',
-            key: 'city'
-        },
-        {
-            title: 'Адреса',
-            dataIndex: 'address',
-            key: 'address'
+            title: 'Зал',
+            dataIndex: 'gym',
+            key: 'gym'
         }
     ]
 

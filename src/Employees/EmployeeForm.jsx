@@ -73,7 +73,7 @@ const EmployeeForm = () => {
                 id: coach?.id,
                 employeeId: employee?.id,
                 description: values.description,
-                sportTypeIds: selectedSportTypes,
+                sportTypeIds: selectedSportTypes ?? coach.sportTypes.map(st => st.id),
                 canBeIndividual: canBeIndividual,
                 pricePerHour: values.pricePerHour
             }
@@ -198,7 +198,7 @@ const EmployeeForm = () => {
                     ? 
                     <>
                     {coach != null
-                        ? <Form.Item label="Види спорту" name='sportTypes' rules={[{ required: true, message: 'Будь ласка, оберіть види спорту!'}]}>
+                        ? <Form.Item label="Види спорту" name='sportTypes'>
                               <Select placeholder="Оберіть види спорту" mode="multiple" onChange={values => setSelectedSportTypes(values)} defaultValue={coach.sportTypes.map(x => x.id)}>
                                   {sportTypes?.map(c => <Option key={c.id} value={c.id}>{c.name}</Option>)} 
                               </Select>
