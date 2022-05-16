@@ -22,6 +22,7 @@ const EmployeesWindow = () => {
                 tempDataSource.push({
                     key: e.id,
                     name: e.firstName + ' ' + e.lastName,
+                    login: e.login,
                     position: e.position.name,
                     hireDate: new Date(e.hireDate).toLocaleDateString(),
                     dismissDate: e.dismissDate == null ? 'Н/З' : new Date(e.dismissDate).toLocaleDateString(),
@@ -40,6 +41,11 @@ const EmployeesWindow = () => {
             title: "Ім'я",
             dataIndex: 'name',
             key: 'name'
+        },
+        {
+            title: "Логін",
+            dataIndex: 'login',
+            key: 'login'
         },
         {
             title: 'Посада',

@@ -34,7 +34,7 @@ const EmployeeForm = () => {
             setSportTypes(response.data);
         })
 
-        if (employee.position.id == coachPostionId) {
+        if (employee != null && employee.position.id == coachPostionId) {
             axios.get(apiPath + 'coach/getByEmployeeId', {params: {employeeId: employee.id}}).then(response => {
                 setCoach(response.data);
                 let temp = response.data;
@@ -68,17 +68,26 @@ const EmployeeForm = () => {
         };
 
         let tempCoach = null;
-        if (selectedPosition == coachPostionId) {
+        if (selectedPosition == coachPostionId || coach != null) {
             tempCoach = {
                 id: coach?.id,
                 employeeId: employee?.id,
                 description: values.description,
+                sportTypeIds: selectedSportTypes,
+                canBeIndividual: canBeIndividual,
+                pricePerHour: values.pricePerHour
             }
         }
 
+        let createdEmployee = null;
         if (employee == null) {
             axios.post(apiPath + 'employee/create', tempEmployee).then(response => {
-                axios.post()
+                createdEmployee = response.data;
+                
+                if (selectedPosition == coachPostionId) {
+                    tempCoach.employeeId = createdEmployee.id;
+                    axios.post(apiPath + 'coach/create', tempCoach);
+                }
 
                 navigate('/employees', {state: {navEmployee: navEmployee, employee: employee}});
             }).catch(error => {
@@ -86,7 +95,13 @@ const EmployeeForm = () => {
             })
         }
         else {
+            console.log(tempCoach)
+
             axios.put(apiPath + 'employee/update', tempEmployee).then(response => {
+                if (selectedPosition == coachPostionId || coach != null) {
+                    axios.put(apiPath + 'coach/update', tempCoach);
+                }
+
                 navigate('/employees', {state: {navEmployee: navEmployee, employee: employee}});
             }).catch(error => {
                 alert('Помилка оновлення!');
@@ -147,9 +162,13 @@ const EmployeeForm = () => {
                             <Input placeholder="Введіть логін"/>
                         </Form.Item>}
 
-                <Form.Item label="Пароль" name='password' rules={[{ required: true, message: 'Будь ласка, введіть значення!'}]} initialValue={'*'.repeat(employee.password.length)}>
-                    <Input placeholder="Введіть пароль"/>
-                </Form.Item>
+                {employee != null 
+                    ? <Form.Item label="Пароль" name='password' rules={[{ required: true, message: 'Будь ласка, введіть значення!'}]} initialValue={employee.password}>
+                          <Input placeholder="Введіть пароль" type="password" />
+                      </Form.Item>
+                    : <Form.Item label="Пароль" name='password' rules={[{ required: true, message: 'Будь ласка, введіть значення!'}]}>
+                          <Input placeholder="Введіть пароль" type="password" />
+                      </Form.Item>}
 
                 {employee != null 
                       ? <Form.Item label="Спортзал" name='gym' rules={[{ required: true, message: 'Будь ласка, оберіть спортзал!'}]} initialValue={employee.gym.id}>
@@ -169,7 +188,7 @@ const EmployeeForm = () => {
                                 {positions?.map(c => <Option value={c.id}>{c.name}</Option>)} 
                             </Select>
                         </Form.Item>
-                      : <Form.Item label="Посада" name='position' rules={[{ required: true, message: 'Будь ласка, оберіть посаду!'}]} initialValue={managerPositionId}>
+                      : <Form.Item label="Посада" name='position' rules={[{ required: true, message: 'Будь ласка, оберіть посаду!'}]}>
                             <Select placeholder="Оберіть посаду" onSelect={(value, e) => setSelectedPosition(value)}>
                                 {positions?.map(c => <Option value={c.id}>{c.name}</Option>)} 
                             </Select>
