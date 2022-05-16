@@ -1,4 +1,4 @@
-import { Form, Select, DatePicker, Button } from "antd";
+import { Form, Select, DatePicker, Button, Input } from "antd";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -40,7 +40,7 @@ const MembershipReceiptForm = () => {
             sellerId: values.seller,
             customerId: values.customer,
             membershipTypeId: values.membershipType,
-            payementDateTime: values.payementDateTime
+            payementDateTime: values.payementDate.format('YYYY-MM-DD') + 'T' + values.payementTime
         };
 
         if (receipt == null) {
@@ -101,11 +101,19 @@ const MembershipReceiptForm = () => {
                         </Form.Item>}
                 
                 {receipt != null 
-                      ? <Form.Item label='Дата оплати' name='payementDateTime' rules={[{ required: true, message: 'Будь ласка, оберіть дату!'}]}  initialValue={moment(receipt.payementDateTime)}>
+                      ? <Form.Item label='Дата оплати' name='payementDate' rules={[{ required: true, message: 'Будь ласка, оберіть дату!'}]}  initialValue={moment(receipt.payementDateTime)}>
                             <DatePicker placeholder="Оберіть дату"/>
                         </Form.Item>
-                      : <Form.Item label='Дата оплати' name='payementDateTime' rules={[{ required: true, message: 'Будь ласка, оберіть дату!'}]} >
+                      : <Form.Item label='Дата оплати' name='payementDate' rules={[{ required: true, message: 'Будь ласка, оберіть дату!'}]} >
                             <DatePicker placeholder="Оберіть дату"/>
+                        </Form.Item>}
+
+                {receipt != null 
+                      ? <Form.Item label='Час оплати' name='payementTime' rules={[{ required: true, message: 'Будь ласка, введіть час!'}]}  initialValue={receipt.payementDateTime.slice(11, 16)}>
+                            <Input placeholder="Введіть час"/>
+                        </Form.Item>
+                      : <Form.Item label='Час оплати' name='payementTime' rules={[{ required: true, message: 'Будь ласка, введіть час!'}]} >
+                            <Input placeholder="Введіть час"/>
                         </Form.Item>}
 
                 <Button type="primary" htmlType="submit" className="create-button">

@@ -24,11 +24,18 @@ import CustomerForm from "./Customers/CustomerForm";
 import EmployeesWindow from "./Employees/EmployeesWindow";
 import Employee from "./Employees/Employee";
 import EmployeeForm from "./Employees/EmployeeForm";
+import MembershipTypesWindow from "./MembershipTypes/MembershipTypesWindow";
+import MembershipType from "./MembershipTypes/MembershipType";
+import MembershipTypeForm from "./MembershipTypes/MembershipTypeForm";
 
 function App() {
     return (
         <Router>
             <Routes>
+                <Route path='/createMembershipType' element={<MembershipTypeForm />} />
+                <Route path='/editMembershipType' element={<MembershipTypeForm />} />
+                <Route path='/membershipType' element={<MembershipType />} />
+                <Route path='/membershipTypes' element={<MembershipTypesWindow />} />
                 <Route path='/createEmployee' element={<EmployeeForm />} />
                 <Route path='/editEmployee' element={<EmployeeForm />} />
                 <Route path='/employee' element={<Employee />} />

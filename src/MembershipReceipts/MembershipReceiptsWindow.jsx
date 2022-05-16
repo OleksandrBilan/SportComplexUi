@@ -25,7 +25,7 @@ const MembershipReceiptsWindow = () => {
                     customer: r.customer.firstName + ' ' + r.customer.lastName,
                     seller: r.seller.firstName + ' ' + r.seller.lastName,
                     membershipType: r.membershipType.name,
-                    payementDateTime: new Date(r.payementDateTime).toLocaleDateString()
+                    payementDateTime: new Date(r.payementDateTime).toLocaleDateString() + ', ' + new Date(r.payementDateTime).toLocaleTimeString()
                 })
             });
     

@@ -38,6 +38,10 @@ const Navbar = (props) => {
             <Menu.Item onClick={() => navigate('/employees', {state: {navEmployee: employee, employee: employee}})}>
                 Працівники
             </Menu.Item>}
+            {employee.position.id == adminPositionId && 
+            <Menu.Item onClick={() => navigate('/membershipTypes', {state: {navEmployee: employee, employee: employee}})}>
+                Загальні абонементи
+            </Menu.Item>}
 
             <Menu.Item style={{marginLeft: 'auto'}} onClick={() => navigate('/personalInfo', {state: {navEmployee: employee, employee: employee}})}>
                 Особиста інформація
