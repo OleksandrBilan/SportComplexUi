@@ -42,6 +42,18 @@ const Navbar = (props) => {
             <Menu.Item onClick={() => navigate('/membershipTypes', {state: {navEmployee: employee, employee: employee}})}>
                 Загальні абонементи
             </Menu.Item>}
+            {employee.position.id == adminPositionId && 
+            <Menu.Item onClick={() => navigate('/subscriptionTypes', {state: {navEmployee: employee, employee: employee}})}>
+                Групові абонементи
+            </Menu.Item>}
+            {employee.position.id == adminPositionId && 
+            <Menu.Item onClick={() => navigate('/sportSections', {state: {navEmployee: employee, employee: employee}})}>
+                Спортивні секції
+            </Menu.Item>}
+            {employee.position.id == adminPositionId && 
+            <Menu.Item onClick={() => navigate('/sportTypes', {state: {navEmployee: employee, employee: employee}})}>
+                Види спорту
+            </Menu.Item>}
 
             <Menu.Item style={{marginLeft: 'auto'}} onClick={() => navigate('/personalInfo', {state: {navEmployee: employee, employee: employee}})}>
                 Особиста інформація

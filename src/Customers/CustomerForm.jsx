@@ -1,12 +1,9 @@
-import { Form, Select, Input, DatePicker, TimePicker, Button } from "antd";
+import { Form, Select, Input, Button } from "antd";
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useLocation, useNavigate } from 'react-router-dom';
 import { apiPath } from "../App";
 import Navbar from "../Navbar/Navbar";
-import moment from 'moment';
-
-const { Option } = Select;
 
 const CustomerForm = () => {
     const navigate = useNavigate();

@@ -6,22 +6,22 @@ import { Button, Tag } from 'antd';
 import axios from "axios";
 import { apiPath } from "../App";
 
-const MembershipType = () => {
+const SubscriptionType = () => {
     const navigate = useNavigate();
     const location = useLocation();
-    const membershipType = location.state.membershipType;
+    const subType = location.state.subscriptionType;
     const navEmployee = location.state.navEmployee;
 
     const onDelete = () => {
         if (window.confirm('Ви впевнені, що хочете видалити цей абонемент?')) {
-            axios.delete(apiPath + 'membershipType/delete?id=' + membershipType.id).then(() => {
-                navigate('/membershipTypes', {state: {navEmployee: navEmployee}});
+            axios.delete(apiPath + 'subscriptionType/delete?id=' + subType.id).then(() => {
+                navigate('/subscriptionTypes', {state: {navEmployee: navEmployee}});
             });
         }
     }
 
     const onEdit = () => {
-        navigate('/editMembershipType', {state: {membershipType: membershipType, navEmployee: navEmployee}});
+        navigate('/editSubscriptionType', {state: {subscriptionType: subType, navEmployee: navEmployee}});
     }
 
     return (
@@ -29,11 +29,10 @@ const MembershipType = () => {
         <Navbar employee={navEmployee} />
         <div className="group-info">
             <h1>Абонемент</h1>
-            <h2>Назва: {membershipType.name}</h2>
-            <h2>Ціна: {membershipType.price}</h2>
-            <h2>Кількість місяців: {membershipType.availabilityDurationInMonths}</h2>
-            <h2>Можливий час тренувань: {membershipType.workoutStartTime.slice(0, 5) + ' - ' + membershipType.workoutEndTime.slice(0, 5)}</h2>
-            <h2>Види спорту: {membershipType.sportTypes.map(st => <Tag color='blue'>{st.name}</Tag>)}</h2>
+            <h2>Спортивна секція: <a onClick={() => navigate('/sportSection', {state:{navEmployee:navEmployee, sportSection: subType.sportSection}})}>{subType.sportSection.name}</a></h2>
+            <h2>Вид спорту: {subType.sportSection.sportType.name}</h2>
+            <h2>Ціна: {subType.price}</h2>
+            <h2>Можлива кількість тренувань: {subType.availableTrainingsCount}</h2>
         </div>
         <div className="buttons">
             <Button type="primary" onClick={() => onEdit()}>Змінити</Button>
@@ -43,4 +42,4 @@ const MembershipType = () => {
     )
 }
 
-export default MembershipType;
+export default SubscriptionType;

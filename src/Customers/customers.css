@@ -2,6 +2,7 @@
     margin-top: 1%;
     display: flex;
     justify-content: space-evenly;
+    flex-wrap: wrap;
 }
 
 .new-group-btn {

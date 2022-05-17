@@ -27,11 +27,30 @@ import EmployeeForm from "./Employees/EmployeeForm";
 import MembershipTypesWindow from "./MembershipTypes/MembershipTypesWindow";
 import MembershipType from "./MembershipTypes/MembershipType";
 import MembershipTypeForm from "./MembershipTypes/MembershipTypeForm";
+import SubscriptionTypesWindow from "./SubscriptionTypes/SubscriptionTypesWindow";
+import SubscriptionType from "./SubscriptionTypes/SubscriptionType";
+import SubscriptionTypeForm from "./SubscriptionTypes/SubscriptionTypeForm";
+import SportSectionsWindow from "./SportSections/SportSectionsWindow";
+import SportSection from "./SportSections/SportSection";
+import SportSectionForm from "./SportSections/SportSectionForm";
+import SportTypesWindow from "./SportTypes/SportTypesWindow";
+import SportTypeForm from "./SportTypes/SportTypeForm";
 
 function App() {
     return (
         <Router>
             <Routes>
+                <Route path='/createSportType' element={<SportTypeForm />} />
+                <Route path='/editSportType' element={<SportTypeForm />} />
+                <Route path='/sportTypes' element={<SportTypesWindow />} />
+                <Route path='/createSportSection' element={<SportSectionForm />} />
+                <Route path='/editSportSection' element={<SportSectionForm />} />
+                <Route path='/sportSection' element={<SportSection />} />
+                <Route path='/sportSections' element={<SportSectionsWindow />} />
+                <Route path='/createSubscriptionType' element={<SubscriptionTypeForm />} />
+                <Route path='/editSubscriptionType' element={<SubscriptionTypeForm />} />
+                <Route path='/subscriptionType' element={<SubscriptionType />} />
+                <Route path='/subscriptionTypes' element={<SubscriptionTypesWindow />} />
                 <Route path='/createMembershipType' element={<MembershipTypeForm />} />
                 <Route path='/editMembershipType' element={<MembershipTypeForm />} />
                 <Route path='/membershipType' element={<MembershipType />} />
