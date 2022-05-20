@@ -20,6 +20,10 @@ const Navbar = (props) => {
             <Menu.Item onClick={() => navigate('/individualTrainings', {state: {navEmployee: employee, employee: employee}})}>
                 Індивідуальні тренування
             </Menu.Item>}
+            {employee.position.id != adminPositionId &&
+            <Menu.Item onClick={() => navigate('/groupTrainings', {state: {navEmployee: employee, employee: employee}})}>
+                Групові тренування
+            </Menu.Item>}
 
             {employee.position.id == managerPositionId && 
             <Menu.Item onClick={() => navigate('/membershipReceipts', {state: {navEmployee: employee, employee: employee}})}>
@@ -53,6 +57,14 @@ const Navbar = (props) => {
             {employee.position.id == adminPositionId && 
             <Menu.Item onClick={() => navigate('/sportTypes', {state: {navEmployee: employee, employee: employee}})}>
                 Види спорту
+            </Menu.Item>}
+            {employee.position.id == adminPositionId && 
+            <Menu.Item onClick={() => navigate('/gyms', {state: {navEmployee: employee, employee: employee}})}>
+                Спортзали
+            </Menu.Item>}
+            {employee.position.id == adminPositionId && 
+            <Menu.Item onClick={() => navigate('/cities', {state: {navEmployee: employee, employee: employee}})}>
+                Міста
             </Menu.Item>}
 
             <Menu.Item style={{marginLeft: 'auto'}} onClick={() => navigate('/personalInfo', {state: {navEmployee: employee, employee: employee}})}>

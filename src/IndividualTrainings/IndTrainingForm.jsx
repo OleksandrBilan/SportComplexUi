@@ -35,9 +35,8 @@ const IndTrainingForm = () => {
             individualCoachId: values.coach,
             payedHours: values.payedHours,
             price: values.price,
-            payementDateTime: values.payementDate.format('YYYY-MM-DD')
+            payementDateTime: values.payementDate.format('YYYY-MM-DD') + 'T' + values.payementTime
         };
-        console.log(temp)
 
         if (indTraining == null) {
             axios.post(apiPath + 'individualTraining/create', temp).then(response => {
@@ -108,16 +107,16 @@ const IndTrainingForm = () => {
                         <Form.Item label='Дата оплати' name='payementDate' rules={[{ required: true, message: 'Будь ласка, оберіть дату!'}]}  initialValue={moment(indTraining.payementDateTime)}>
                             <DatePicker placeholder="Оберіть дату"/>
                         </Form.Item>
-                        <Form.Item label='Час оплати' name='payementTime' rules={[{ required: true, message: 'Будь ласка, оберіть час!'}]} initialValue={moment(indTraining.payementDateTime)}>
-                            <TimePicker placeholder="Оберіть час"/>
+                        <Form.Item label='Час оплати' name='payementTime' rules={[{ required: true, message: 'Будь ласка, введіть час!'}]} initialValue={new Date(indTraining.payementDateTime).toLocaleTimeString().slice(0,5)}>
+                            <Input placeholder="Введіть час"/>
                         </Form.Item>
                         </>
                       : <>
                         <Form.Item label='Дата оплати' name='payementDate' rules={[{ required: true, message: 'Будь ласка, оберіть дату!'}]}>
                             <DatePicker placeholder="Оберіть дату"/>
                         </Form.Item>
-                        <Form.Item label='Час оплати' name='payementTime' rules={[{ required: true, message: 'Будь ласка, оберіть час!'}]}>
-                            <TimePicker placeholder="Оберіть час"/>
+                        <Form.Item label='Час оплати' name='payementTime' rules={[{ required: true, message: 'Будь ласка, введіть час!'}]}>
+                            <Input placeholder="Введіть час"/>
                         </Form.Item>
                         </>}
 

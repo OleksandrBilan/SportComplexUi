@@ -38,7 +38,7 @@ const IndividualTraining = () => {
         </div>
         <div className="receipt-info">
             <h1><a onClick={() => navigate('/membershipReceipt', {state: {navEmployee: navEmployee, membershipReceipt: indTraining.membershipReceipt}})}>Абонемент</a></h1>
-            <h2>Продавець: {<a onClick={() => navigate('/personalInfo', {state: {navEmployee: navEmployee, employee: indTraining.membershipReceipt.seller}}) }>{indTraining.membershipReceipt.seller.firstName + ' ' + indTraining.membershipReceipt.seller.lastName}</a>}</h2>
+            <h2>Продавець: {<a onClick={() => navigate('/personalInfo', {state: {navEmployee: navEmployee, employee: indTraining.membershipReceipt.seller}})}>{indTraining.membershipReceipt.seller.firstName + ' ' + indTraining.membershipReceipt.seller.lastName}</a>}</h2>
             <h2>Тип: {<a>{indTraining.membershipReceipt.membershipType.name}</a>}</h2>
         </div>
         <div className="buttons">

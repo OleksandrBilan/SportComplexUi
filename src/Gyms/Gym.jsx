@@ -6,32 +6,32 @@ import { Button, Tag } from 'antd';
 import axios from "axios";
 import { apiPath } from "../App";
 
-const SportSection = () => {
+const Gym = () => {
     const navigate = useNavigate();
     const location = useLocation();
-    const section = location.state.sportSection;
+    const gym = location.state.gym;
     const navEmployee = location.state.navEmployee;
 
     const onDelete = () => {
         if (window.confirm('Ви впевнені, що хочете видалити цю секцію?')) {
-            axios.delete(apiPath + 'sportSection/delete?id=' + section.id).then(() => {
-                navigate('/sportSections', {state: {navEmployee: navEmployee}});
+            axios.delete(apiPath + 'gym/delete?id=' + gym.id).then(() => {
+                navigate('/gyms', {state: {navEmployee: navEmployee}});
             });
         }
     }
 
     const onEdit = () => {
-        navigate('/editSportSection', {state: {sportSection: section, navEmployee: navEmployee}});
+        navigate('/editGym', {state: {gym: gym, navEmployee: navEmployee}});
     }
 
     return (
         <>
         <Navbar employee={navEmployee} />
         <div className="group-info">
-            <h1>Спортивна секція</h1>
-            <h2>Назва: {section.name}</h2>
-            <h2>Вид спорту: {section.sportType.name}</h2>
-            <h2>Опис: {section.description}</h2>
+            <h1>Спотзал</h1>
+            <h2>Місто: {gym.city.name}</h2>
+            <h2>Адреса: {gym.address}</h2>
+            <h2>Контакти: {gym.phoneNumber}</h2>
         </div>
         <div className="buttons">
             <Button type="primary" onClick={() => onEdit()}>Змінити</Button>
@@ -41,4 +41,4 @@ const SportSection = () => {
     )
 }
 
-export default SportSection;
+export default Gym;

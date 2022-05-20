@@ -35,11 +35,30 @@ import SportSection from "./SportSections/SportSection";
 import SportSectionForm from "./SportSections/SportSectionForm";
 import SportTypesWindow from "./SportTypes/SportTypesWindow";
 import SportTypeForm from "./SportTypes/SportTypeForm";
+import GroupTrainingsWindow from "./GroupTrainings/GroupTrainingsWindow";
+import GroupTraining from "./GroupTrainings/GroupTraining";
+import GroupTrainingForm from "./GroupTrainings/GroupTrainingForm";
+import CitiesWindow from "./Cities/CitiesWindow";
+import CityForm from "./Cities/CityForm";
+import GymsWindow from "./Gyms/GymsWindow";
+import Gym from "./Gyms/Gym";
+import GymForm from "./Gyms/GymForm";
 
 function App() {
     return (
         <Router>
             <Routes>
+                <Route path='/createGym' element={<GymForm />} />
+                <Route path='/editGym' element={<GymForm />} />
+                <Route path='/gym' element={<Gym />} />
+                <Route path='/gyms' element={<GymsWindow />} />
+                <Route path='/createCity' element={<CityForm />} />
+                <Route path='/editCity' element={<CityForm />} />
+                <Route path='/cities' element={<CitiesWindow />} />
+                <Route path='/createGroupTraining' element={<GroupTrainingForm />} />
+                <Route path='/editGroupTraining' element={<GroupTrainingForm />} />
+                <Route path='/groupTraining' element={<GroupTraining />} />
+                <Route path='/groupTrainings' element={<GroupTrainingsWindow />} />
                 <Route path='/createSportType' element={<SportTypeForm />} />
                 <Route path='/editSportType' element={<SportTypeForm />} />
                 <Route path='/sportTypes' element={<SportTypesWindow />} />

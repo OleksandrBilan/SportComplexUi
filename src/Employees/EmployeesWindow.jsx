@@ -9,7 +9,6 @@ const EmployeesWindow = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const navEmployee = location.state.navEmployee;
-    const employee = location.state.employee ?? navEmployee;
     const [dataSource, setDataSource] = useState();
     const [employees, setEmployees] = useState();
 
