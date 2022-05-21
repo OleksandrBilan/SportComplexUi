@@ -68,7 +68,7 @@ const MembershipTypesWindow = () => {
         <Table 
         dataSource={dataSource} 
         columns={columns}
-        pagination={{ pageSize: 9 }}
+        pagination={false}
         onRow={(record, rowIndex) => {
             return {
                 onClick: event => {

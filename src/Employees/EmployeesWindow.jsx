@@ -21,7 +21,7 @@ const EmployeesWindow = () => {
                 axios.get(apiPath + 'coach/individualCoaches').then(indResponse => {
                     tempEmployees.filter(e => e.position.id == coachPostionId).forEach(e => {
                         let coach = response.data.filter(c => c.employeeInfo.id == e.id)[0];
-                        let indCoach = indResponse.data.filter(ic => ic.coachInfo.id == coach.id)[0];
+                        let indCoach = indResponse.data.filter(ic => ic.coachInfo.id == coach?.id)[0];
                         if (indCoach != null) {
                             e.position.name += ', Індивідуальний';
                         }
@@ -86,7 +86,7 @@ const EmployeesWindow = () => {
         <Table 
         dataSource={dataSource} 
         columns={columns}
-        pagination={{ pageSize: 9 }}
+        pagination={false}
         onRow={(record, rowIndex) => {
             return {
                 onClick: event => {

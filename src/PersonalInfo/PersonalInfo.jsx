@@ -4,7 +4,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import './personalInfo.css';
 import axios from "axios";
 import { adminPositionId, apiPath, coachPostionId } from "../App";
-import { Tag, Button } from 'antd';
+import { Tag, Button, Table } from 'antd';
 import 'antd/dist/antd.css';
 
 const PersonalInfo = () => {
@@ -14,6 +14,9 @@ const PersonalInfo = () => {
     const employee = location.state.employee ?? navEmployee;
     const [coach, setCoach] = useState();
     const [individualCoach, setIndCoach] = useState();
+    const [educationData, setEducationData] = useState();
+    const [jobsData, setJobsData] = useState();
+    const [render, setRender] = useState(0);
 
     useEffect(() => {
         if (employee.position.id == coachPostionId) {
@@ -27,12 +30,35 @@ const PersonalInfo = () => {
                 }).catch(error => {});
             });
         }
-    }, [])
+
+        let tempEducationData = [];
+        employee.educations.forEach(e => {
+            tempEducationData.push({
+                key: e.id,
+                specialty: e.specialty.name,
+                level: e.level.name,
+                university: e.university.name,
+                graduationDate: new Date(e.graduationDate).toLocaleDateString()
+            })
+        });
+        setEducationData(tempEducationData);
+
+        let tempJobsData = [];
+        employee.previousJobs.forEach(j => {
+            tempJobsData.push({
+                key: j.id,
+                company: j.company.name,
+                startDate: new Date(j.startDate).toLocaleDateString(),
+                endDate: new Date(j.endDate).toLocaleDateString()
+            })
+        });
+        setJobsData(tempJobsData);
+    }, [render])
 
     const onDelete = () => {
         if (window.confirm('Ви впевнені, що хочете видалити цей запис?')) {
             axios.delete(apiPath + 'employee/delete?id=' + employee.id).then(() => {
-                navigate('/employees', {state: {navEmployee: navEmployee}});
+                setRender(render + 1);
             });
         }
     }
@@ -40,6 +66,67 @@ const PersonalInfo = () => {
     const onEdit = () => {
         navigate('/editEmployee', {state: {employee: employee, navEmployee: navEmployee}});
     }
+
+    const educationColumns = [
+        {
+            title: "Спеціальність",
+            dataIndex: 'specialty',
+            key: 'specialty'
+        },
+        {
+            title: "Рівень",
+            dataIndex: 'level',
+            key: 'level'
+        },
+        {
+            title: 'Навчальний заклад',
+            dataIndex: 'university',
+            key: 'university',
+        },
+        {
+            title: 'Дата закінчення',
+            dataIndex: 'graduationDate',
+            key: 'graduationDate'
+        }
+    ];
+
+    const jobsColumns = [
+        {
+            title: "Місце праці",
+            dataIndex: 'company',
+            key: 'company'
+        },
+        {
+            title: 'Дата початку',
+            dataIndex: 'startDate',
+            key: 'startDate'
+        },
+        {
+            title: 'Дата закінчення',
+            dataIndex: 'endDate',
+            key: 'endDate'
+        }
+    ]
+
+    const onAddEducation = () => {}
+
+    const onEducationDelete = (id) => {
+        if (window.confirm('Ви впевнені, що хочете видалити цей запис?')) {
+            axios.delete(apiPath + 'employee/deleteEmployeeEducation?id=' + id).then(() => {
+                setRender(render + 1);
+            });
+        }
+    }
+
+    const onRow = (record, rowIndex) => ({
+        onContextMenu: e => {
+            e.preventDefault();
+            onEducationDelete(employee.educations[rowIndex].id);
+        },
+        onClick: () => {
+            navigate('/editEmployeeEducation', {state: {navEmployee: navEmployee, employee: employee, education: employee.educations[rowIndex]}});
+        }
+    })
 
     return (
         <>
@@ -59,19 +146,40 @@ const PersonalInfo = () => {
                 <h2>Контакти: {employee.gym.phoneNumber}</h2>
             </div>
             <div className="additional-info">
-                {coach != null &&
+                <div className="education">
+                    <h1>Освіта</h1>
+                    <Table 
+                    dataSource={educationData}
+                    columns={educationColumns}
+                    pagination={false}
+                    onRow={onRow}
+                    />
+                    <Button type="primary" className="additional-button" onClick={() => navigate('/addEmployeeEducation', {state: {navEmployee: navEmployee, employee: employee}})}>Додати запис</Button>
+                </div>
+                <div className="jobs">
+                    <h1>Попередня робота</h1>
+                    <Table 
+                    dataSource={jobsData}
+                    columns={jobsColumns}
+                    pagination={false}
+                    />
+                    <Button type="primary" className="additional-button" onClick={() => onAddEducation()}>Додати запис</Button>
+                </div>
+            </div>
+        </div>
+        <div className="coach-info">
+            {coach != null &&
                 <>
                 <h1>Види спорту</h1>
-                <h2>{coach.sportTypes.map(t => <Tag color='blue'>{t.name}</Tag>)}</h2>
+                <h2>{coach.sportTypes.map(t => <Tag color='blue'>{t?.name}</Tag>)}</h2>
                 <h1>Опис</h1>
                 <h2>{coach.description}</h2>
                 </>}
-                {individualCoach != null &&
+            {individualCoach != null &&
                 <>
                 <h1>Індивідуальні тренування</h1>
                 <h2>Ціна за годину: {individualCoach.pricePerHour}</h2>
                 </>}
-            </div>
         </div>
         {navEmployee.position.id == adminPositionId &&
         <div className="buttons">

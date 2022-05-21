@@ -15,7 +15,7 @@ const EmployeeForm = () => {
     const navEmployee = location.state.navEmployee;
     const [positions, setPositions] = useState();
     const [gyms, setGyms] = useState();
-    const [selectedPosition, setSelectedPosition] = useState();
+    const [selectedPosition, setSelectedPosition] = useState(employee.position.id);
     const [sportTypes, setSportTypes] = useState();
     const [coach, setCoach] = useState();
     const [selectedSportTypes, setSelectedSportTypes] = useState();
@@ -26,7 +26,7 @@ const EmployeeForm = () => {
             setPositions(response.data);
         })
 
-        axios.get(apiPath + 'employee/getGyms').then(response => {
+        axios.get(apiPath + 'gym/getAll').then(response => {
             setGyms(response.data);
         })
 
@@ -194,12 +194,12 @@ const EmployeeForm = () => {
                             </Select>
                         </Form.Item>}
 
-                {selectedPosition == coachPostionId || coach != null 
+                {selectedPosition == coachPostionId 
                     ? 
                     <>
                     {coach != null
                         ? <Form.Item label="Види спорту" name='sportTypes'>
-                              <Select placeholder="Оберіть види спорту" mode="multiple" onChange={values => setSelectedSportTypes(values)} defaultValue={coach.sportTypes.map(x => x.id)}>
+                              <Select placeholder="Оберіть види спорту" mode="multiple" onChange={values => setSelectedSportTypes(values)} defaultValue={coach.sportTypes.map(x => x?.id)}>
                                   {sportTypes?.map(c => <Option key={c.id} value={c.id}>{c.name}</Option>)} 
                               </Select>
                           </Form.Item>

@@ -1,5 +1,5 @@
 import React from "react";
-import { Menu } from "antd";
+import { Menu, Affix } from "antd";
 import "antd/dist/antd.css";
 import "./navbar.css";
 import { useNavigate } from 'react-router-dom';
@@ -11,6 +11,7 @@ const Navbar = (props) => {
 
     return (
         <>
+        <Affix offsetTop={0}>
         <Menu className='navbar' theme="light" mode="horizontal">
             {employee.position.id != adminPositionId &&
             <Menu.Item onClick={() => navigate('/groups', {state: {navEmployee: employee, employee: employee}})}>
@@ -74,6 +75,7 @@ const Navbar = (props) => {
                 Вийти з акаунту
             </Menu.Item>
         </Menu>
+        </Affix>
         </>
     )
 }

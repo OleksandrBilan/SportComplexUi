@@ -22,7 +22,6 @@ import CustomersWindow from "./Customers/CustomersWindow";
 import Customer from "./Customers/Customer";
 import CustomerForm from "./Customers/CustomerForm";
 import EmployeesWindow from "./Employees/EmployeesWindow";
-import Employee from "./Employees/Employee";
 import EmployeeForm from "./Employees/EmployeeForm";
 import MembershipTypesWindow from "./MembershipTypes/MembershipTypesWindow";
 import MembershipType from "./MembershipTypes/MembershipType";
@@ -43,11 +42,14 @@ import CityForm from "./Cities/CityForm";
 import GymsWindow from "./Gyms/GymsWindow";
 import Gym from "./Gyms/Gym";
 import GymForm from "./Gyms/GymForm";
+import EmployeeEducationForm from "./Employees/EducationForm";
 
 function App() {
     return (
         <Router>
             <Routes>
+                <Route path='/addEmployeeEducation' element={<EmployeeEducationForm />} />
+                <Route path='/editEmployeeEducation' element={<EmployeeEducationForm />} />
                 <Route path='/createGym' element={<GymForm />} />
                 <Route path='/editGym' element={<GymForm />} />
                 <Route path='/gym' element={<Gym />} />
@@ -76,7 +78,7 @@ function App() {
                 <Route path='/membershipTypes' element={<MembershipTypesWindow />} />
                 <Route path='/createEmployee' element={<EmployeeForm />} />
                 <Route path='/editEmployee' element={<EmployeeForm />} />
-                <Route path='/employee' element={<Employee />} />
+                <Route path='/employee' element={<PersonalInfo />} />
                 <Route path='/employees' element={<EmployeesWindow />} />
                 <Route path='/createCustomer' element={<CustomerForm />} />
                 <Route path='/editCustomer' element={<CustomerForm />} />
