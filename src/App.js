@@ -43,11 +43,14 @@ import GymsWindow from "./Gyms/GymsWindow";
 import Gym from "./Gyms/Gym";
 import GymForm from "./Gyms/GymForm";
 import EmployeeEducationForm from "./Employees/EducationForm";
+import PreviousJobForm from "./Employees/PreviousJobForm";
 
 function App() {
     return (
         <Router>
             <Routes>
+                <Route path='/addEmployeePreviousJob' element={<PreviousJobForm />} />
+                <Route path='/editEmployeePreviousJob' element={<PreviousJobForm />} />
                 <Route path='/addEmployeeEducation' element={<EmployeeEducationForm />} />
                 <Route path='/editEmployeeEducation' element={<EmployeeEducationForm />} />
                 <Route path='/createGym' element={<GymForm />} />

@@ -108,9 +108,7 @@ const PersonalInfo = () => {
         }
     ]
 
-    const onAddEducation = () => {}
-
-    const onEducationDelete = (id) => {
+    const onEducationDelete = id => {
         if (window.confirm('Ви впевнені, що хочете видалити цей запис?')) {
             axios.delete(apiPath + 'employee/deleteEmployeeEducation?id=' + id).then(() => {
                 setRender(render + 1);
@@ -118,13 +116,35 @@ const PersonalInfo = () => {
         }
     }
 
-    const onRow = (record, rowIndex) => ({
+    const onPreviousJobDelete = id => {
+        if (window.confirm('Ви впевнені, що хочете видалити цей запис?')) {
+            axios.delete(apiPath + 'employee/deleteEmployeePreviousJob?id=' + id).then(() => {
+                setRender(render + 1);
+            });
+        }
+    }
+
+    const onEducationRow = (record, rowIndex) => ({
         onContextMenu: e => {
             e.preventDefault();
-            onEducationDelete(employee.educations[rowIndex].id);
+            if (navEmployee.position.id == adminPositionId)
+                onEducationDelete(employee.educations[rowIndex].id);
         },
         onClick: () => {
-            navigate('/editEmployeeEducation', {state: {navEmployee: navEmployee, employee: employee, education: employee.educations[rowIndex]}});
+            if (navEmployee.position.id == adminPositionId)
+                navigate('/editEmployeeEducation', {state: {navEmployee: navEmployee, employee: employee, education: employee.educations[rowIndex]}});
+        }
+    })
+
+    const onJobRow = (record, rowIndex) => ({
+        onContextMenu: e => {
+            e.preventDefault();
+            if (navEmployee.position.id == adminPositionId)
+                onPreviousJobDelete(employee.educations[rowIndex].id);
+        },
+        onClick: () => {
+            if (navEmployee.position.id == adminPositionId)
+                navigate('/editEmployeePreviousJob', {state: {navEmployee: navEmployee, employee: employee, job: employee.previousJobs[rowIndex]}});
         }
     })
 
@@ -152,9 +172,10 @@ const PersonalInfo = () => {
                     dataSource={educationData}
                     columns={educationColumns}
                     pagination={false}
-                    onRow={onRow}
+                    onRow={onEducationRow}
                     />
-                    <Button type="primary" className="additional-button" onClick={() => navigate('/addEmployeeEducation', {state: {navEmployee: navEmployee, employee: employee}})}>Додати запис</Button>
+                    {navEmployee.position.id == adminPositionId &&
+                    <Button type="primary" className="additional-button" onClick={() => navigate('/addEmployeeEducation', {state: {navEmployee: navEmployee, employee: employee}})}>Додати запис</Button>}
                 </div>
                 <div className="jobs">
                     <h1>Попередня робота</h1>
@@ -162,8 +183,10 @@ const PersonalInfo = () => {
                     dataSource={jobsData}
                     columns={jobsColumns}
                     pagination={false}
+                    onRow={onJobRow}
                     />
-                    <Button type="primary" className="additional-button" onClick={() => onAddEducation()}>Додати запис</Button>
+                    {navEmployee.position.id == adminPositionId &&
+                    <Button type="primary" className="additional-button" onClick={() => navigate('/addEmployeePreviousJob', {state: {navEmployee: navEmployee, employee: employee}})}>Додати запис</Button>}
                 </div>
             </div>
         </div>

@@ -2,7 +2,7 @@ import { Form, Select, Input, DatePicker, Button } from "antd";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from 'react-router-dom';
-import { apiPath } from "../App";
+import { apiPath, coachPostionId } from "../App";
 import Navbar from "../Navbar/Navbar";
 import '../Groups/groupForm.css';
 import moment from 'moment';
@@ -24,7 +24,11 @@ const GroupTrainingForm = () => {
         })
 
         axios.get(apiPath + 'group/getAll').then(response => {
-            setGroups(response.data);
+            let temp = response.data;
+            if (navEmployee.position.id == coachPostionId) {
+                temp = temp.filter(g => g.coach.employeeInfo.id == navEmployee.id);
+            }
+            setGroups(temp);
         })
     }, [])
 
@@ -60,12 +64,12 @@ const GroupTrainingForm = () => {
                 {groupTraining != null 
                       ? <Form.Item label="Абонемент" name='receipt' rules={[{ required: true, message: 'Будь ласка, оберіть абонемент!'}]} initialValue={groupTraining.receipt.id}>
                             <Select placeholder="Оберіть абонемент">
-                                {subscriptionReceipts?.map(s => <Option key={s.id} value={s.id}>{s.customer.firstName + ' ' + s.customer.lastName + ', ' + new Date(s.expireDate).toLocaleDateString()}</Option>)} 
+                                {subscriptionReceipts?.map(s => <Option key={s.id} value={s.id}>{s.customer.firstName + ' ' + s.customer.lastName + ', ' + s.subscriptionType.sportSection.name}</Option>)} 
                             </Select>
                         </Form.Item>
                       : <Form.Item label="Абонемент" name='receipt' rules={[{ required: true, message: 'Будь ласка, оберіть абонемент!'}]}>
                             <Select placeholder="Оберіть абонемент">
-                                {subscriptionReceipts?.map(s => <Option key={s.id} value={s.id}>{s.customer.firstName + ' ' + s.customer.lastName + ', ' + new Date(s.expireDate).toLocaleDateString()}</Option>)} 
+                                {subscriptionReceipts?.map(s => <Option key={s.id} value={s.id}>{s.customer.firstName + ' ' + s.customer.lastName + ', ' + s.subscriptionType.sportSection.name}</Option>)} 
                             </Select>
                         </Form.Item>}
                 

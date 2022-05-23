@@ -17,6 +17,8 @@ const GroupForm = () => {
     const employee = location.state.employee ?? navEmployee;
     const [sportSections, setSportSections] = useState();
     const [coaches, setCoaches] = useState();
+    const [days, setDays] = useState();
+    const [selectedDays, setSelectedDays] = useState();
 
     useEffect(() => {
         axios.get(apiPath + 'sportSection/getAll').then(response => {
@@ -26,7 +28,25 @@ const GroupForm = () => {
         axios.get(apiPath + 'coach/getAll').then(response => {
             setCoaches(response.data);
         })
+
+        axios.get(apiPath + 'group/getDays').then(response => {
+            setDays(response.data);
+        })
     }, [])
+
+    function arraysEqual(a, b) {
+        if (a === b) return true;
+        if (a == null || b == null) return false;
+        if (a.length !== b.length) return false;
+      
+        a.sort();
+        b.sort();
+      
+        for (var i = 0; i < a.length; ++i) {
+          if (a[i] !== b[i]) return false;
+        }
+        return true;
+      }
 
     const onFinish = values => {
         let temp = {
@@ -34,8 +54,9 @@ const GroupForm = () => {
             sportSectionId: values.sportSection,
             coachId: values.coach,
             maxCustomersNumber: values.maxCustomersCount,
-            startDate: values.startDate,
-            endDate: values.endDate
+            startDate: values.startDate.format('YYYY-MM-DD'),
+            endDate: values.endDate.format('YYYY-MM-DD'),
+            schedules: values.scheduleDays.map(d => ({dayId: d, startTime: values.startTime, endTime: values.endTime}))
         };
 
         if (group == null) {
@@ -60,7 +81,7 @@ const GroupForm = () => {
         <div className="group-form">
             <Form onFinish={onFinish}>
                 {group != null 
-                      ? <Form.Item label="Спортивна секція" name='sportSection' rules={[{ required: true, message: 'Будь ласка, оберіть спортивну секцію!'}]}  initialValue={group.sportSection.id}>
+                      ? <Form.Item label="Спортивна секція" name='sportSection' rules={[{ required: true, message: 'Будь ласка, оберіть спортивну секцію!'}]} initialValue={group.sportSection.id}>
                             <Select placeholder="Оберіть спортивну секцію">
                                 {sportSections?.map(s => <Option value={s.id}>{s.name}</Option>)} 
                             </Select>
@@ -84,28 +105,55 @@ const GroupForm = () => {
                         </Form.Item>}
                 
                 {group != null 
-                      ? <Form.Item label='Максимальна кількість відвідувачів' name='maxCustomersCount' rules={[{ required: true, message: 'Будь ласка, введіть значення!'}]}  initialValue={group.maxCustomersCount}>
-                            <Input min={1} max={100} type='number'/>
+                      ? <Form.Item label='Максимальна кількість відвідувачів' name='maxCustomersCount' rules={[{ required: true, message: 'Будь ласка, введіть значення!'}]} initialValue={group.maxCustomersCount}>
+                            <Input min={1} type='number'/>
                         </Form.Item>
                       : <Form.Item label='Максимальна кількість відвідувачів' name='maxCustomersCount' rules={[{ required: true, message: 'Будь ласка, введіть значення!'}]} >
-                            <Input min={1} max={100} type='number'/>
+                            <Input min={1} type='number'/>
                         </Form.Item>}
                         
                 {group != null 
-                      ? <Form.Item label='Дата початку тренувань' name='startDate' rules={[{ required: true, message: 'Будь ласка, оберіть дату!'}]}  initialValue={moment(group.startDate)}>
+                      ? <Form.Item label='Дата початку тренувань' name='startDate' rules={[{ required: true, message: 'Будь ласка, оберіть дату!'}]} initialValue={moment(group.startDate)}>
                             <DatePicker placeholder="Оберіть дату"/>
                         </Form.Item>
                       : <Form.Item label='Дата початку тренувань' name='startDate' rules={[{ required: true, message: 'Будь ласка, оберіть дату!'}]} >
                             <DatePicker placeholder="Оберіть дату"/>
                         </Form.Item>}
                 
-                
                 {group != null 
-                      ? <Form.Item label='Дата закінчення тренувань' name='endDate' rules={[{ required: true, message: 'Будь ласка, оберіть дату!'}]}  initialValue={moment(group.endDate)}>
+                      ? <Form.Item label='Дата закінчення тренувань' name='endDate' rules={[{ required: true, message: 'Будь ласка, оберіть дату!'}]} initialValue={moment(group.endDate)}>
                             <DatePicker placeholder="Оберіть дату"/>
                         </Form.Item>
                       : <Form.Item label='Дата закінчення тренувань' name='endDate' rules={[{ required: true, message: 'Будь ласка, оберіть дату!'}]} >
                             <DatePicker placeholder="Оберіть дату"/>
+                        </Form.Item>}
+
+                {group != null
+                      ? <Form.Item label="Дні занять" name='scheduleDays'>
+                            <Select placeholder="Оберіть дні занять" mode="multiple" onChange={values => setSelectedDays(values)} defaultValue={group.schedules.map(x => x.day.id)}>
+                                {days?.map(c => <Option key={c.id} value={c.id}>{c.name}</Option>)}
+                            </Select>
+                        </Form.Item>
+                      : <Form.Item label="Дні занять" name='scheduleDays'>
+                            <Select placeholder="Оберіть дні занять" mode="multiple" onChange={values => setSelectedDays(values)}>
+                                {days?.map(c => <Option key={c.id} value={c.id}>{c.name}</Option>)}
+                            </Select>
+                        </Form.Item>}
+                
+                {group != null 
+                      ? <Form.Item label='Час початку заняття' name='startTime' initialValue={group.schedules[0]?.startTime?.slice(0, 5)}>
+                            <Input />
+                        </Form.Item>
+                      : <Form.Item label='Час початку заняття' name='startTime'>
+                            <Input />
+                        </Form.Item>}
+                
+                {group != null 
+                      ? <Form.Item label='Час закінчеття заняття' name='endTime' initialValue={group.schedules[0]?.endTime?.slice(0, 5)}>
+                            <Input />
+                        </Form.Item>
+                      : <Form.Item label='Час закінчеття заняття' name='endTime'>
+                            <Input />
                         </Form.Item>}
 
                 <Button type="primary" htmlType="submit" className="create-button">

@@ -15,7 +15,6 @@ h1 {
 }
 
 .buttons {
-    margin-left: 12.5%;
     width: 20%;
     display: flex;
     justify-content: space-evenly;

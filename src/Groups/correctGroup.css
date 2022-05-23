@@ -1,0 +1,20 @@
+.group-container {
+    width: 100%;
+    display: flex;
+}
+
+.col1 {
+    width: 50%;
+    padding-left: 1.5%;
+}
+
+.schedule-div {
+    width: 50%;
+    text-align: center;
+}
+
+.schedule-cards {
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+}

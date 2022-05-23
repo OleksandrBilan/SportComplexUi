@@ -2,7 +2,7 @@ import { Form, Select, Input, DatePicker, TimePicker, Button } from "antd";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from 'react-router-dom';
-import { apiPath } from "../App";
+import { apiPath, coachPostionId } from "../App";
 import Navbar from "../Navbar/Navbar";
 import './indTrainForm.css';
 import moment from 'moment';
@@ -24,7 +24,11 @@ const IndTrainingForm = () => {
         })
 
         axios.get(apiPath + 'coach/individualCoaches').then(response => {
-            setCoaches(response.data);
+            let temp = response.data;
+            if (navEmployee.position.id == coachPostionId) {
+                temp = temp.filter(c => c.coachInfo.employeeInfo.id == navEmployee.id);
+            }
+            setCoaches(temp);
         })
     }, [])
 
