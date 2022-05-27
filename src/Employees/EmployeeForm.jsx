@@ -15,7 +15,7 @@ const EmployeeForm = () => {
     const navEmployee = location.state.navEmployee;
     const [positions, setPositions] = useState();
     const [gyms, setGyms] = useState();
-    const [selectedPosition, setSelectedPosition] = useState(employee.position.id);
+    const [selectedPosition, setSelectedPosition] = useState(employee?.position?.id);
     const [sportTypes, setSportTypes] = useState();
     const [coach, setCoach] = useState();
     const [selectedSportTypes, setSelectedSportTypes] = useState();
@@ -95,8 +95,6 @@ const EmployeeForm = () => {
             })
         }
         else {
-            console.log(tempCoach)
-
             axios.put(apiPath + 'employee/update', tempEmployee).then(response => {
                 if (selectedPosition == coachPostionId || coach != null) {
                     axios.put(apiPath + 'coach/update', tempCoach);
@@ -139,7 +137,7 @@ const EmployeeForm = () => {
                     </Form.Item>}
 
                 {employee != null 
-                      ? <Form.Item label='Дата найму' name='hireDate' rules={[{ required: true, message: 'Будь ласка, оберіть дату!'}]}  initialValue={moment(employee.hireDate)}>
+                      ? <Form.Item label='Дата найму' name='hireDate' rules={[{ required: true, message: 'Будь ласка, оберіть дату!'}]} initialValue={moment(employee.hireDate)}>
                             <DatePicker placeholder="Оберіть дату"/>
                         </Form.Item>
                       : <Form.Item label='Дата найму' name='hireDate' rules={[{ required: true, message: 'Будь ласка, оберіть дату!'}]} >

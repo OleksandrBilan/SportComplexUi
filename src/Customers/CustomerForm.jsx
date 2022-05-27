@@ -52,7 +52,7 @@ const CustomerForm = () => {
                     ? <Form.Item label="Прізвище" name='lastName' rules={[{ required: true, message: 'Будь ласка, введіть значення!'}]} initialValue={customer.lastName}>
                         <Input placeholder="Введіть прізвище"/>
                     </Form.Item>
-                    : <Form.Item label="Ім'я" name='lastName' rules={[{ required: true, message: 'Будь ласка, введіть значення!'}]}>
+                    : <Form.Item label="Прізвище" name='lastName' rules={[{ required: true, message: 'Будь ласка, введіть значення!'}]}>
                         <Input placeholder="Введіть прізвище"/>
                     </Form.Item>}
                     

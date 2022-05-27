@@ -30,7 +30,7 @@ const EmployeeEducationForm = () => {
             university: values.university,
             levelId: values.level,
             specialty: values.specialty,
-            graduationDate: values.graduationDate.format()
+            graduationDate: values.graduationDate.format('YYYY-MM-DD')
         };
 
         if (education == null) {
