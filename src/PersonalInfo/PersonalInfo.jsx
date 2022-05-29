@@ -58,7 +58,7 @@ const PersonalInfo = () => {
     const onDelete = () => {
         if (window.confirm('Ви впевнені, що хочете видалити цей запис?')) {
             axios.delete(apiPath + 'employee/delete?id=' + employee.id).then(() => {
-                setRender(render + 1);
+                navigate('/employees', {state: {navEmployee: navEmployee, employee: employee}});
             });
         }
     }
@@ -111,6 +111,7 @@ const PersonalInfo = () => {
     const onEducationDelete = id => {
         if (window.confirm('Ви впевнені, що хочете видалити цей запис?')) {
             axios.delete(apiPath + 'employee/deleteEmployeeEducation?id=' + id).then(() => {
+                employee.educations = employee.educations.filter(j => j.id != id);
                 setRender(render + 1);
             });
         }
@@ -119,6 +120,7 @@ const PersonalInfo = () => {
     const onPreviousJobDelete = id => {
         if (window.confirm('Ви впевнені, що хочете видалити цей запис?')) {
             axios.delete(apiPath + 'employee/deleteEmployeePreviousJob?id=' + id).then(() => {
+                employee.previousJobs = employee.previousJobs.filter(j => j.id != id);
                 setRender(render + 1);
             });
         }
@@ -140,7 +142,7 @@ const PersonalInfo = () => {
         onContextMenu: e => {
             e.preventDefault();
             if (navEmployee.position.id == adminPositionId)
-                onPreviousJobDelete(employee.educations[rowIndex].id);
+                onPreviousJobDelete(employee.previousJobs[rowIndex].id);
         },
         onClick: () => {
             if (navEmployee.position.id == adminPositionId)
@@ -207,7 +209,8 @@ const PersonalInfo = () => {
         {navEmployee.position.id == adminPositionId &&
         <div className="buttons">
             <Button type="primary" onClick={() => onEdit()}>Змінити</Button>
-            <Button type="danger" onClick={() => onDelete()}>Видалити</Button>
+            {employee.id != navEmployee.id &&
+                <Button type="danger" onClick={() => onDelete()}>Видалити</Button>}
         </div>}
         </>
     )

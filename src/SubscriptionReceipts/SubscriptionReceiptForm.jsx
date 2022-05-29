@@ -112,24 +112,24 @@ const SubscriptionReceiptForm = () => {
 
                 {receipt != null 
                       ? <Form.Item name='isPayed' valuePropName="checked" initialValue={receipt.isPayed}>
-                            <Checkbox>
+                            <Checkbox key={1} >
                                 Оплачений
                             </Checkbox>
                         </Form.Item>
                       : <Form.Item name='isPayed' valuePropName="checked" initialValue={true}>
-                            <Checkbox>
+                            <Checkbox key={1} >
                                 Оплачений
                             </Checkbox>
                         </Form.Item>}
                 
                 {receipt != null 
                       ? <Form.Item name='isActive' valuePropName="checked" initialValue={receipt.isActive}>
-                            <Checkbox>
+                            <Checkbox key={2} >
                                 Активний
                             </Checkbox>
                         </Form.Item>
-                      : <Form.Item name='isPayed' valuePropName="checked" initialValue={true}>
-                            <Checkbox>
+                      : <Form.Item name='isActive' valuePropName="checked" initialValue={true}>
+                            <Checkbox key={2} >
                                 Активний
                             </Checkbox>
                         </Form.Item>}

@@ -21,8 +21,8 @@ const PreviousJobForm = () => {
             id: job?.id,
             employeeId: employee.id,
             company: values.company,
-            startDate: values.startDate,
-            endDate: values.endDate
+            startDate: values.startDate.format('YYYY-MM-DD'),
+            endDate: values.endDate.format('YYYY-MM-DD')
         };
 
         if (job == null) {
